@@ -140,7 +140,19 @@ def get_seconds(score: int) ->int:
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((2000,1000))
+    #screen type
+    info = pygame.display.Info()
+    screen_width = info.current_w
+    screen_height = info.current_h
+    game_width = 2000
+    game_hight = 1000
+    if screen_width < game_width or screen_height < game_hight:
+        flags = pygame.FULLSCREEN | pygame.SCALED
+    else:
+        flags = pygame.RESIZABLE | pygame.SCALED
+    
+    #screen setup
+    screen = pygame.display.set_mode((game_width,game_hight),flags)
     clock = pygame.time.Clock()
     game_running=True
 
@@ -197,10 +209,15 @@ def main():
                 if event.type == enemy_timer:
                     enemy_type,enemy_velocity = get_enemy(score)
                     enemys.add(Enemy(enemy_type,enemy_velocity))
-                #jump
+                #key check
                 if event.type == pygame.KEYDOWN:
+                    #jump
                     if event.key == pygame.K_SPACE:
                         player.sprite.jump() 
+                    #exit
+                    if event.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        exit()
             if not game_running:
                 #restart game
                 if event.type == pygame.KEYDOWN:
