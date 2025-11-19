@@ -30,7 +30,7 @@ class Player(pygame.sprite.Sprite):
             current_time = pygame.time.get_ticks()
             time_elapsed = current_time - self.hovering_start
 
-            if time_elapsed >= 250 or not keys[pygame.K_SPACE]:
+            if time_elapsed >= 300 or not keys[pygame.K_SPACE]:
                 self.gravity += 2.5
         else:
             self.gravity += 2.5
@@ -52,7 +52,7 @@ class Enemy(pygame.sprite.Sprite):
             position=1900,800
         elif type == 'fly':
             enemy_surface=pygame.Surface((80,80))
-            position=1900,500
+            position=1900,400
 
         self.name = type
         self.has_scored = False
@@ -102,11 +102,11 @@ def get_enemy(score:int) -> tuple:
     match score:
         case n if n < 10:
             enemy_type = 'ground'
-            enemy_velocity = randint(10,20)
+            enemy_velocity = randint(15,20)
 
         case n if 10 <= n < 30 and 0 <= random_number <= 3:
             enemy_type = 'fly'
-            enemy_velocity = randint(10,20)
+            enemy_velocity = randint(15,25)
 
         case n if 10 <= n < 30 and 3 < random_number <= 10:
             enemy_type = 'ground'
@@ -114,7 +114,7 @@ def get_enemy(score:int) -> tuple:
 
         case n if 30 <= n < 50 and 0 <= random_number <= 3:
             enemy_type = 'fly'
-            enemy_velocity = randint(20,30)
+            enemy_velocity = randint(20,35)
 
         case n if 30 <= n < 50 and 3 < random_number <= 10:
             enemy_type = 'ground'
@@ -189,7 +189,7 @@ def main():
         if (seconds-100) > new_seconds:
             pygame.time.set_timer(enemy_timer,new_seconds)
             seconds = new_seconds
-            print(new_seconds)
+            print(seconds)
 
         #key tracker
         keys = pygame.key.get_pressed()
